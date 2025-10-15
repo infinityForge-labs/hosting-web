@@ -1,0 +1,221 @@
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <div class="logo">
+                <img src="https://i.imgur.com/D127tJ7.png" alt="Razor Cloud Logo">
+                <h1>Razor Cloud</h1>
+            </div>
+            <p class="footer-description">Premium hosting solutions with unmatched performance and 24/7 support.</p>
+            <div class="footer-social">
+                <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-links">
+            <div class="footer-column">
+                <h3 class="footer-title">Services</h3>
+                <ul>
+                    <li><a href="#">Minecraft Hosting</a></li>
+                    <li><a href="#">VPS Hosting</a></li>
+                    <li><a href="#">RDP Hosting</a></li>
+                    <li><a href="#">Bot Hosting</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3 class="footer-title">Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3 class="footer-title">Support</h3>
+                <ul>
+                    <li><a href="#">Knowledge Base</a></li>
+                    <li><a href="#">Status</a></li>
+                    <li><a href="#">Submit Ticket</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-legal">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Policy</a>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Razor Cloud. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        background: #0a0a12;
+        color: rgba(255,255,255,0.7);
+        padding: 4rem 5% 2rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 3rem;
+    }
+
+    .footer-brand {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer-brand .logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-brand .logo h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .footer-brand .logo img {
+        height: 40px;
+        margin-right: 10px;
+    }
+
+    .footer-description {
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .footer-social {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        transform: translateY(-3px);
+    }
+
+    .footer-links {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    .footer-title {
+        color: white;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 3px;
+        bottom: -8px;
+        left: 0;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+    }
+
+    .footer-column ul {
+        list-style: none;
+    }
+
+    .footer-column li {
+        margin-bottom: 0.8rem;
+    }
+
+    .footer-column a {
+        color: rgba(255,255,255,0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .footer-column a:hover {
+        color: var(--secondary);
+        padding-left: 5px;
+    }
+
+    .footer-bottom {
+        max-width: 1200px;
+        margin: 3rem auto 0;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .footer-legal {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .footer-legal a {
+        color: rgba(255,255,255,0.5);
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .footer-legal a:hover {
+        color: var(--secondary);
+    }
+
+    .copyright {
+        color: rgba(255,255,255,0.5);
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+        .footer-container {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-links {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .footer-legal {
+            justify-content: center;
+        }
+    }
+</style>

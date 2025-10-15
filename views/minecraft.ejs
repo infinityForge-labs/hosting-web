@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Razor Cloud - Minecraft Hosting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="<%= process.env.FAV_ICON %>" type="image/x-icon">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5649c0;
+            --secondary: #00cec9;
+            --text-light: #f5f6fa;
+            --bg-dark: #131a28;
+            --card-bg: #1a2030;
+            --text-muted: #a0a8c0;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            position: relative;
+        }
+
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.4); /* Dim the video for better text readability */
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Subtle overlay for contrast */
+            z-index: -1;
+        }
+
+        .services-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(108, 92, 231, 0.5);
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px); /* Subtle glass effect */
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(26, 32, 48, 0.95), rgba(108, 92, 231, 0.2));
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 2;
+        }
+
+        .service-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .service-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .price {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .price span {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .service-features li:last-child {
+            border-bottom: none;
+        }
+
+        .service-features li i {
+            margin-right: 12px;
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 1.8rem;
+            border-radius: 50px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.5);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--secondary);
+            color: var(--card-bg);
+            padding: 0.4rem 2.2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 10px rgba(0, 206, 201, 0.4);
+            z-index: 3;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .service-card:nth-child(1) { animation-delay: 0.1s; }
+        .service-card:nth-child(2) { animation-delay: 0.3s; }
+        .service-card:nth-child(3) { animation-delay: 0.5s; }
+        .service-card:nth-child(4) { animation-delay: 0.7s; }
+        .service-card:nth-child(5) { animation-delay: 0.9s; }
+        .service-card:nth-child(6) { animation-delay: 1.1s; }
+        .service-card:nth-child(7) { animation-delay: 1.3s; }
+        .service-card:nth-child(8) { animation-delay: 1.5s; }
+        .service-card:nth-child(9) { animation-delay: 1.7s; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .services-container {
+                padding: 1.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .section-title p {
+                font-size: 1.1rem;
+            }
+
+            .service-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .service-card {
+                padding: 1.8rem;
+            }
+
+            .price {
+                font-size: 2rem;
+            }
+
+            .popular-tag {
+                right: -20px;
+                padding: 0.3rem 1.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title p {
+                font-size: 1rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.4rem;
+            }
+
+            .service-features li {
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.4rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Improved Hover Effects */
+        .service-card:hover .price {
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        /* Tooltip for features */
+        .feature-tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            cursor: help;
+        }
+
+        .feature-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 220px;
+            background-color: var(--text-light);
+            color: var(--bg-dark);
+            text-align: center;
+            border-radius: 8px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85rem;
+            font-weight: normal;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<% include partials/mcheader %>
+<body>
+    <video class="video-background" autoplay muted loop playsinline>
+        <source src="<%= process.env.MINECRAFT_BACKGROUND %>" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="video-overlay"></div>
+
+    <div class="services-container">
+        <div class="section-title">
+        <h2>------------------------------</h2>
+            <h2>Minecraft Hosting</h2>
+            <p>Best and Affordable Minecraft Server Hosting in India, Singapore, Germany, Middle East, and USA. Powerful, lag-free Minecraft hosting with instant setup and 99.9% uptime. Perfect for small to large communities.</p>
+        </div>
+
+        <div class="services-content active" id="minecraft-tab">
+            <div class="service-cards">
+                <div class="service-card">
+                    <h3>Dirt Plan</h3>
+                    <div class="price">₹80 / $1 <span>/month</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-memory"></i> 2GB DDR4 RAM <span class="feature-tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">Sufficient for small servers with basic gameplay.</span></span></li>
+                        <li><i class="fas fa-microchip"></i> 1 vCPU Core (High Frequency)</li>
+                        <li><i class="fas fa-hard-drive"></i> 10GB NVMe SSD Storage</li>
+                        <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                        <li><i class="fas fa-folder-open"></i> Full SFTP Access</li>
+                        <li><i class="fas fa-cloud"></i> 1 Cloud Backup</li>
+                    </ul>
+                    <a href="<%= process.env.DISCORD_LINK %>" class="btn btn-primary">Order Now</a>
+                </div>
+
+                <div class="service-card" style="position: relative;">
+                    <div class="popular-tag">MOST POPULAR</div>
+                    <h3>Wood Plan</h3>
+                    <div class="price">₹160 / $2 <span>/month</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-memory"></i> 4GB DDR4 RAM <span class="feature-tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">Ideal for small to medium servers with light modpacks.</span></span></li>
+                        <li><i class="fas fa-microchip"></i> 1.5 vCPU Cores (High Frequency)</li>
+                        <li><i class="fas fa-hard-drive"></i> 20GB NVMe SSD Storage</li>
+                        <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                        <li><i class="fas fa-folder-open"></i> Full SFTP Access</li>
+                        <li><i class="fas fa-cloud"></i> 2 Cloud Backups</li>
+                    </ul>
+                    <a href="<%= process.env.DISCORD_LINK %>" class="btn btn-primary">Order Now</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>Coal Plan</h3>
+                    <div class="price">₹240 / $3 <span>/month</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-memory"></i> 6GB DDR4 RAM <span class="feature-tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">Great for medium servers with moderate modpacks.</span></span></li>
+                        <li><i class="fas fa-microchip"></i> 2 vCPU Cores (High Frequency)</li>
+                        <li><i class="fas fa-hard-drive"></i> 40GB NVMe SSD Storage</li>
+                        <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                        <li><i class="fas fa-folder-open"></i> Full SFTP Access</li>
+                        <li><i class="fas fa-cloud"></i> 3 Cloud Backups</li>
+                    </ul>
+                    <a href="<%= process.env.DISCORD_LINK %>" class="btn btn-primary">Order Now</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>Copper Plan</h3>
+                    <div class="price">₹320 / $4 <span>/month</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-memory"></i> 8GB DDR4 RAM <span class="feature-tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">Supports larger servers with more complex gameplay.</span></span></li>
+                        <li><i class="fas fa-microchip"></i> 2 vCPU Cores (High Frequency)</li>
+                        <li><i class="fas fa-hard-drive"></i> 40GB NVMe SSD Storage</li>
+                        <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                        <li><i class="fas fa-folder-open"></i> Full SFTP Access</li>
+                        <li><i class="fas fa-cloud"></i> 4 Cloud Backups</li>
+                    </ul>
+                    <a href="<%= process.env.DISCORD_LINK %>" class="btn btn-primary">Order Now</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>Iron Plan</h3>
+                    <div class="price">₹420 / $5.25 <span>/month</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-memory"></i> 12GB DDR4 RAM <span class="feature-tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">Perfect for large servers with heavy modpacks.</span></span></li>
+                        <li><i class="fas fa-microchip"></i> 3 vCPU Cores (High Frequency)</li>
+                        <li><i class="fas fa-hard-drive"></i> 50GB NVMe SSD Storage</li>
+                        <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                        <li><i class="fas fa-folder-open"></i> Full SFTP Access</li>
+                        <li><i class="fas fa-cloud"></i> 5 Cloud Backups</li>
+                    </ul>
+                    <a href="<%= process.env.DISCORD_LINK %>" class="btn btn-primary">Order Now</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>Gold Plan</h3>
+                    <div class="price">₹520 / $6.5 <span>/month</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-memory"></i> 16GB DDR4 RAM <span class="feature-tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">High-performance plan for demanding servers.</span></span></li>
+                        <li><i class="fas fa-microchip"></i> 4 vCPU Cores (High Frequency)</li>
+                        <li><i class="fas fa-hard-drive"></i> 60GB NVMe SSD Storage</li>
+                        <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                        <li><i class="fas fa-folder-open"></i> Full SFTP Access</li>
+                        <li><i class="fas fa-cloud"></i> 6 Cloud Backups</li>
+                    </ul>
+                    <a href="<%= process.env.DISCORD_LINK %>" class="btn btn-primary">Order Now</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>Diamond Plan</h3>
+                    <div class="price">₹620 / $7.75 <span>/month</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-memory"></i> 24GB DDR4 RAM <span class="feature-tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">Elite plan for massive servers with extensive mods.</span></span></li>
+                        <li><i class="fas fa-microchip"></i> 4 vCPU Cores (High Frequency)</li>
+                        <li><i class="fas fa-hard-drive"></i> 80GB NVMe SSD Storage</li>
+                        <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                        <li><i class="fas fa-folder-open"></i> Full SFTP Access</li>
+                        <li><i class="fas fa-cloud"></i> 7 Cloud Backups</li>
+                    </ul>
+                    <a href="<%= process.env.DISCORD_LINK %>" class="btn btn-primary">Order Now</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>Emerald Plan</h3>
+                    <div class="price">₹720 / $9 <span>/month</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-memory"></i> 32GB DDR4 RAM <span class="feature-tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">Premium plan for top-tier performance.</span></span></li>
+                        <li><i class="fas fa-microchip"></i> 8 vCPU Cores (High Frequency)</li>
+                        <li><i class="fas fa-hard-drive"></i> 100GB NVMe SSD Storage</li>
+                        <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                        <li><i class="fas fa-folder-open"></i> Full SFTP Access</li>
+                        <li><i class="fas fa-cloud"></i> Unlimited Cloud Backups</li>
+                    </ul>
+                    <a href="<%= process.env.DISCORD_LINK %>" class="btn btn-primary">Order Now</a>
+                </div>
+
+                <div class="service-card">
+                    <h3>Obsidian Plan</h3>
+                    <div class="price">₹820 / $10.25 <span>/month</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-memory"></i> Unlimited DDR4 RAM <span class="feature-tooltip"><i class="fas fa-info-circle"></i><span class="tooltip-text">Ultimate plan for unmatched performance.</span></span></li>
+                        <li><i class="fas fa-microchip"></i> Unlimited vCPU Cores (High Frequency)</li>
+                        <li><i class="fas fa-hard-drive"></i> Unlimited NVMe SSD Storage</li>
+                        <li><i class="fas fa-users"></i> Unlimited Player Slots</li>
+                        <li><i class="fas fa-folder-open"></i> Full SFTP Access</li>
+                        <li><i class="fas fa-cloud"></i> Unlimited Cloud Backups</li>
+                        <li><i class="fas fa-globe"></i> Free Subdomain</li>
+                    </ul>
+                    <a href="<%= process.env.DISCORD_LINK %>" class="btn btn-primary">Order Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.service-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Touch hover effect for mobile
+            if ('ontouchstart' in window) {
+                document.querySelectorAll('.service-card').forEach(card => {
+                    card.addEventListener('touchstart', function() {
+                        this.classList.add('hover');
+                    });
+                    card.addEventListener('touchend', function() {
+                        setTimeout(() => this.classList.remove('hover'), 300);
+                    });
+                });
+            }
+
+            // Optimize video playback
+            const video = document.querySelector('.video-background');
+            if (video) {
+                video.playbackRate = 0.8; // Slightly slower for smoother looping
+                video.addEventListener('loadeddata', () => {
+                    video.style.opacity = 1; // Fade in video when loaded
+                });
+            }
+        });
+
+        // Copy protection measures
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('copy', event => {
+            event.preventDefault();
+            alert('Copying content is disabled for security reasons.');
+        });
+        document.addEventListener('cut', event => event.preventDefault());
+        document.addEventListener('dragstart', event => event.preventDefault());
+        document.addEventListener('selectstart', event => event.preventDefault());
+
+        // Disable dev tools
+        document.addEventListener('keydown', event => {
+            if (
+                event.keyCode === 123 || // F12
+                (event.ctrlKey && event.shiftKey && event.keyCode === 73) || // Ctrl+Shift+I
+                (event.ctrlKey && event.shiftKey && event.keyCode === 74) || // Ctrl+Shift+J
+                (event.ctrlKey && event.keyCode === 85) // Ctrl+U
+            ) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

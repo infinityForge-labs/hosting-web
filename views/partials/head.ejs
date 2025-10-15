@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= process.env.COMPANY_NAME || 'Premium Hosting' %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon from URL -->
+    <link rel="icon" href="https://razorcloud.com/assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/D127tJ7.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/D127tJ7.png">
+    
+     <!-- Primary Meta Tags -->
+    <title><%= process.env.COMPANY_NAME || 'Premium Hosting' %> - Best Minecraft, VPS, RDP & Bot Hosting (2025)</title>
+    <meta name="description" content="<%= process.env.COMPANY_NAME || 'Premium Hosting' %> offers premium yet affordable Minecraft server hosting, high-performance VPS, powerful RDP solutions, and reliable bot hosting. Free plans available with 99.9% uptime.">
+    <meta name="keywords" content="minecraft hosting, vps hosting, rdp hosting, bot hosting, free minecraft server, cheap vps, windows rdp, discord bot hosting">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://razorcloud.xyz/">
+    <meta property="og:title" content="<%= process.env.COMPANY_NAME || 'Premium Hosting' %> - Premium Game & Application Hosting">
+    <meta property="og:description" content="Best hosting for Minecraft, VPS, RDP & Bots. Free plans available with 24/7 support and DDoS protection.">
+    <meta property="og:image" content="https://razorcloud.xyz/assets/social-preview.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://razorcloud.xyz/">
+    <meta property="twitter:title" content="<%= process.env.COMPANY_NAME || 'Premium Hosting' %>- Best Minecraft, VPS, RDP & Bot Hosting">
+    <meta property="twitter:description" content="Premium hosting solutions starting at $2.99/mo. Free trial available for all services.">
+    <meta property="twitter:image" content="https://razorcloud.xyz/assets/social-preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://razorcloud.xyz/favicon.ico" type="image/x-icon">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://razorcloud.xyz/">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "<%= process.env.COMPANY_NAME || 'Premium Hosting' %>",
+      "url": "https://razorcloud.xyz/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://razorcloud.xyz/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <!-- Additional SEO Tags -->
+    <meta name="author" content="<%= process.env.COMPANY_NAME || 'Premium Hosting' %>">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6c5ce7">
+    <meta name="apple-mobile-web-app-title" content="<%= process.env.COMPANY_NAME || 'Premium Hosting' %>">
+    
+    <!-- Service-Specific Keywords -->
+    <meta name="minecraft-hosting" content="free minecraft server hosting, premium minecraft hosting, cheap minecraft server">
+    <meta name="vps-hosting" content="cheap vps, linux vps, windows vps, ssd vps hosting">
+    <meta name="rdp-hosting" content="windows rdp, remote desktop, cheap rdp, admin rdp">
+    <meta name="bot-hosting" content="discord bot hosting, telegram bot hosting, 24/7 bot hosting">
+</head>
+    
+    
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5649c0;
+            --secondary: #00cec9;
+            --light: #f5f6fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: var(--light);
+        }
+        
+        .navbar {
+            background: rgba(15, 15, 26, 0.9);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <img src="https://i.imgur.com/D127tJ7.png" alt="<%= process.env.COMPANY_NAME || 'Premium Hosting' %>">
+                <h1><%= process.env.COMPANY_NAME || 'Premium Hosting' %></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="./minecraft">MC Hosting</a></li>
+                <li><a href="./vps">VPS Hosting</a></li>
+                <li><a href="./rdp">RDP Hosting</a></li>
+                <li><a href="./bot">BOT Hosting</a></li>
+                <li><a href="./website">WEB Hosting</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="<%= process.env.PANEL_LINK %>" class="btn btn-primary">PANEL</a>
+            </div>
+        </div>
+    </nav>
